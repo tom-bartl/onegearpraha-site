@@ -1,44 +1,86 @@
-# OneGear Praha website
+# OneGear Praha site
 
-Static website starter for GitHub Pages with custom domain `onegearpraha.cc`.
+Launch checklist for publishing this static site on GitHub Pages with custom domain onegearpraha.cc.
 
-## Files
+## Current status
 
-- `index.html` - page content
-- `styles.css` - visual style and responsive layout
-- `script.js` - reveal-on-scroll animation + footer year
-- `CNAME` - GitHub Pages custom domain
+- Static site files are ready.
+- CNAME file is present and set to onegearpraha.cc.
+- Git branch is main.
+- Git remote is not configured yet.
 
-## Publish on GitHub Pages
+## 1) Create and connect the GitHub repository
 
-1. Create a public repository on GitHub (recommended name: `<your-github-username>.github.io`).
-2. In terminal, run:
+Create a public repository on GitHub, for example:
+
+- onegearpraha-site
+
+Then run:
 
 ```bash
 cd ~/Sites/onegearpraha-site
-git init
 git add .
-git commit -m "Initial OneGear Praha site"
-git branch -M main
-git remote add origin https://github.com/<your-github-username>/<your-repo-name>.git
+git commit -m "Prepare launch"
+git remote add origin https://github.com/<YOUR_GITHUB_USERNAME>/onegearpraha-site.git
 git push -u origin main
 ```
 
-3. On GitHub: `Settings -> Pages`
-4. Under `Build and deployment`:
-   - `Source`: `Deploy from a branch`
-   - `Branch`: `main` and `/(root)`
-5. Confirm custom domain is set to `onegearpraha.cc`.
-6. Enable `Enforce HTTPS` when available.
+If you already have a remote with a different URL, update it with:
 
-## DNS setup in Namecheap
+```bash
+git remote set-url origin https://github.com/<YOUR_GITHUB_USERNAME>/onegearpraha-site.git
+git push -u origin main
+```
 
-In `Advanced DNS`, set:
+## 2) Enable GitHub Pages
 
-- `A` record: Host `@` -> `185.199.108.153`
-- `A` record: Host `@` -> `185.199.109.153`
-- `A` record: Host `@` -> `185.199.110.153`
-- `A` record: Host `@` -> `185.199.111.153`
-- `CNAME` record: Host `www` -> `<your-github-username>.github.io`
+In the GitHub repository:
 
-Remove conflicting old records for `@` or `www`.
+1. Open Settings -> Pages.
+2. In Build and deployment:
+3. Source: Deploy from a branch.
+4. Branch: main and /(root).
+5. Save.
+
+Because CNAME already exists in this repo, Pages should detect onegearpraha.cc automatically.
+
+## 3) Configure DNS for onegearpraha.cc
+
+At your domain registrar DNS panel, create these records:
+
+- A record: Host @ -> 185.199.108.153
+- A record: Host @ -> 185.199.109.153
+- A record: Host @ -> 185.199.110.153
+- A record: Host @ -> 185.199.111.153
+- CNAME record: Host www -> <YOUR_GITHUB_USERNAME>.github.io
+
+Remove any conflicting existing records for @ or www.
+
+Optional IPv6 support (recommended):
+
+- AAAA: @ -> 2606:50c0:8000::153
+- AAAA: @ -> 2606:50c0:8001::153
+- AAAA: @ -> 2606:50c0:8002::153
+- AAAA: @ -> 2606:50c0:8003::153
+
+## 4) Finish domain setup on GitHub
+
+Back in Settings -> Pages:
+
+1. Ensure Custom domain is onegearpraha.cc.
+2. Wait until DNS check passes (can take minutes to a few hours).
+3. Enable Enforce HTTPS.
+
+## 5) Verify after propagation
+
+Check in browser:
+
+- https://onegearpraha.cc
+- https://www.onegearpraha.cc
+
+Both should resolve to the same site over HTTPS.
+
+## Notes
+
+- If you change DNS and nothing updates yet, wait for propagation and clear DNS cache in your browser/OS.
+- Keep the CNAME file in the repository root.
