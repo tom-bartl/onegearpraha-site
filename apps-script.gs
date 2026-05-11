@@ -52,6 +52,27 @@ function doPost(e) {
       currency: data.currency || "CZK",
     });
 
+    try {
+      sendRegistrationEmail({
+        to: data.email,
+        registrationId,
+        paymentStatus: "pending",
+        paymentLink: revolutUrl,
+        details: {
+          fullName: data.fullName || "",
+          team: data.team || "",
+          country: data.country || "",
+          dateOfBirth: data.dateOfBirth || "",
+          email: data.email || "",
+          phone: fullPhone,
+          category: data.category || "",
+          notes: data.notes || "",
+        },
+      });
+    } catch (mailError) {
+      Logger.log(mailError);
+    }
+
     return buildRedirectHtml(revolutUrl, "Redirecting to Revolut payment...");
   } catch (error) {
     Logger.log(error);
@@ -68,11 +89,21 @@ function doGet(e) {
 
   if (action === "payment-success" && reference) {
     markPaymentStatus(reference, "paid");
+    try {
+      sendPaymentStatusEmail(reference, "paid", "");
+    } catch (mailError) {
+      Logger.log(mailError);
+    }
     return buildRedirectHtml(SITE_RETURN_URL + "?payment=success&reference=" + encodeURIComponent(reference), "Payment confirmed. Returning to site...");
   }
 
   if (action === "payment-cancel" && reference) {
     markPaymentStatus(reference, "cancelled");
+    try {
+      sendPaymentStatusEmail(reference, "cancelled", REVOLUT_PAYMENT_LINK);
+    } catch (mailError) {
+      Logger.log(mailError);
+    }
     return buildRedirectHtml(SITE_RETURN_URL + "?payment=cancel&reference=" + encodeURIComponent(reference), "Payment cancelled. Returning to site...");
   }
 
@@ -207,6 +238,109 @@ function markPaymentStatus(registrationId, paymentStatus) {
   }
 
   return false;
+}
+
+function getRegistrationById(registrationId) {
+  const sheet = getSheet();
+  const values = sheet.getDataRange().getValues();
+
+  if (values.length < 2) return null;
+
+  const headers = values[0].map((header) => String(header));
+
+  for (let rowIndex = 1; rowIndex < values.length; rowIndex += 1) {
+    if (String(values[rowIndex][0]) === String(registrationId)) {
+      const row = values[rowIndex];
+      const result = {};
+      headers.forEach((header, index) => {
+        result[header] = row[index];
+      });
+      return result;
+    }
+  }
+
+  return null;
+}
+
+function sendRegistrationEmail(payload) {
+  const to = String(payload.to || "").trim();
+  if (!to) return;
+
+  const details = payload.details || {};
+  const body = buildEmailBody({
+    registrationId: payload.registrationId,
+    paymentStatus: payload.paymentStatus,
+    paymentLink: payload.paymentLink,
+    details,
+  });
+
+  MailApp.sendEmail({
+    to,
+    subject: "One Gear Praha registration confirmation",
+    body,
+  });
+}
+
+function sendPaymentStatusEmail(registrationId, paymentStatus, paymentLink) {
+  const registration = getRegistrationById(registrationId);
+  if (!registration || !registration.email) return;
+
+  const body = buildEmailBody({
+    registrationId,
+    paymentStatus,
+    paymentLink,
+    details: {
+      fullName: registration.fullName,
+      team: registration.team,
+      country: registration.country,
+      dateOfBirth: registration.dateOfBirth,
+      email: registration.email,
+      phone: registration.phone,
+      category: registration.category,
+      notes: registration.notes,
+    },
+  });
+
+  const subject = paymentStatus === "paid"
+    ? "One Gear Praha payment confirmed"
+    : "One Gear Praha payment not completed";
+
+  MailApp.sendEmail({
+    to: String(registration.email),
+    subject,
+    body,
+  });
+}
+
+function buildEmailBody(input) {
+  const details = input.details || {};
+  const status = String(input.paymentStatus || "pending").toLowerCase();
+  const statusLabel = status === "paid" ? "done" : "not done";
+  const lines = [
+    "Hello,",
+    "",
+    "Thank you for registering for One Gear Praha.",
+    "",
+    "Registration ID: " + String(input.registrationId || ""),
+    "Payment status: " + statusLabel,
+    "",
+    "Registration recap:",
+    "- Full name: " + String(details.fullName || ""),
+    "- Team: " + String(details.team || "-"),
+    "- Country: " + String(details.country || ""),
+    "- Date of birth: " + String(details.dateOfBirth || ""),
+    "- Email: " + String(details.email || ""),
+    "- Phone: " + String(details.phone || ""),
+    "- Category: " + String(details.category || ""),
+    "- Notes: " + String(details.notes || "-"),
+  ];
+
+  if (status !== "paid" && input.paymentLink) {
+    lines.push("", "Complete payment here:", String(input.paymentLink));
+  }
+
+  lines.push("", "One Gear Praha");
+  return lines.join("\n");
 }
 
 function sanitizeUrl(url) {
