@@ -151,10 +151,27 @@ function ensureHeader(sheet) {
 }
 
 function buildRedirectHtml(url, message) {
+  const safeUrl = sanitizeUrl(url);
+  const safeMessage = sanitizeHtml(message);
+  const isPaymentUrl = /^https:\/\/checkout\.revolut\.com\//i.test(String(url));
+
   return HtmlService.createHtmlOutput(
-    '<html><head><meta http-equiv="refresh" content="0;url=' + sanitizeUrl(url) + '"></head><body>' +
-      sanitizeHtml(message) +
-      "</body></html>"
+    '<!doctype html><html><head><meta charset="utf-8">' +
+      (isPaymentUrl ? '' : '<meta http-equiv="refresh" content="0;url=' + safeUrl + '">') +
+      '</head><body>' +
+      '<p>' + safeMessage + '</p>' +
+      '<p><a href="' + safeUrl + '" target="_top" rel="noopener noreferrer">Continue</a></p>' +
+      '<script>' +
+      '(function(){' +
+      'var target="' + safeUrl + '";' +
+      'var isPayment=' + (isPaymentUrl ? 'true' : 'false') + ';' +
+      'if (!isPayment) {' +
+      '  try { window.top.location.href = target; } catch (e) {}' +
+      '  try { window.location.href = target; } catch (e) {}' +
+      '}' +
+      '})();' +
+      '</script>' +
+      '</body></html>'
   );
 }
 
@@ -167,28 +184,9 @@ function createRegistrationId() {
 }
 
 function buildRevolutUrl(registration) {
-  const url = new URL(REVOLUT_PAYMENT_LINK);
-
-  if (!url.searchParams.get("amount")) {
-    url.searchParams.set("amount", String(registration.amount));
-  }
-
-  if (!url.searchParams.get("currency")) {
-    url.searchParams.set("currency", registration.currency);
-  }
-
-  url.searchParams.set("reference", registration.registrationId);
-  url.searchParams.set("name", registration.fullName);
-
-  if (!url.searchParams.get("success_url")) {
-    url.searchParams.set("success_url", WEB_APP_URL + "?action=payment-success&reference=" + encodeURIComponent(registration.registrationId));
-  }
-
-  if (!url.searchParams.get("cancel_url")) {
-    url.searchParams.set("cancel_url", WEB_APP_URL + "?action=payment-cancel&reference=" + encodeURIComponent(registration.registrationId));
-  }
-
-  return url.toString();
+  // Return the Revolut checkout link as-is
+  // The checkout link already has all payment details configured
+  return REVOLUT_PAYMENT_LINK;
 }
 
 function markPaymentStatus(registrationId, paymentStatus) {
