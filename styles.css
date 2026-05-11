@@ -284,6 +284,12 @@ label {
   font-size: 0.95rem;
 }
 
+.phone-fields {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr;
+  gap: 0.5rem;
+}
+
 input,
 select,
 textarea {
@@ -390,5 +396,9 @@ textarea:focus {
     gap: 0.7rem;
     font-size: 0.94rem;
     flex-wrap: wrap;
+  }
+
+  .phone-fields {
+    grid-template-columns: 1fr;
   }
 }

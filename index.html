@@ -122,7 +122,6 @@
           id="registration-form"
           method="post"
           action="https://script.google.com/macros/s/AKfycbyFTsiU9d5j57ijMsyJCgdtsaObmdjZJOqjJqv6M0Zol4TJGlk772F2YZnINNOeFwDm/exec"
-          novalidate
         >
           <input type="hidden" name="eventCode" value="ONEGEAR-GENERAL" />
           <input type="hidden" name="eventName" value="One Gear Praha Registration" />
@@ -135,12 +134,37 @@
               <input name="fullName" type="text" autocomplete="name" required />
             </label>
             <label>
+              Team (optional)
+              <input name="team" type="text" autocomplete="organization" />
+            </label>
+            <label>
+              Date of birth
+              <input name="dateOfBirth" type="date" required />
+            </label>
+            <label>
               Email
               <input name="email" type="email" autocomplete="email" required />
             </label>
             <label>
-              Phone
-              <input name="phone" type="tel" autocomplete="tel" required />
+              Phone number
+              <div class="phone-fields">
+                <select name="countryCode" aria-label="International calling code" required>
+                  <option value="+420" selected>+420</option>
+                  <option value="+421">+421</option>
+                  <option value="+49">+49</option>
+                  <option value="+43">+43</option>
+                  <option value="+48">+48</option>
+                  <option value="+36">+36</option>
+                  <option value="+31">+31</option>
+                  <option value="+32">+32</option>
+                  <option value="+33">+33</option>
+                  <option value="+39">+39</option>
+                  <option value="+34">+34</option>
+                  <option value="+44">+44</option>
+                  <option value="+1">+1</option>
+                </select>
+                <input name="phoneNumber" type="tel" inputmode="tel" autocomplete="tel-national" required />
+              </div>
             </label>
             <label>
               Category
@@ -149,19 +173,6 @@
                 <option value="rider">Rider</option>
                 <option value="spectator">Spectator</option>
               </select>
-            </label>
-            <label>
-              Bike setup
-              <select name="bikeSetup" required>
-                <option value="" selected disabled>Select setup</option>
-                <option value="fixed">Fixed gear</option>
-                <option value="singlespeed">Singlespeed</option>
-                <option value="other">Other</option>
-              </select>
-            </label>
-            <label>
-              Emergency contact
-              <input name="emergencyContact" type="text" required />
             </label>
           </div>
 
@@ -172,8 +183,8 @@
 
           <label class="checkbox-row">
             <input name="consent" type="checkbox" required />
-            I confirm my registration details are correct and agree that One Gear Praha stores this registration in
-            organizer records.
+            I confirm my registration details are correct, I accept full responsibility and liability for participation,
+            and I agree to processing of my personal data for organizer records.
           </label>
 
           <div class="form-footer">

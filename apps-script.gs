@@ -15,6 +15,9 @@ function doPost(e) {
     validateConfig();
 
     const data = normalizeIncomingData(e);
+    const fullPhone = [String(data.countryCode || "").trim(), String(data.phoneNumber || "").trim()]
+      .filter(Boolean)
+      .join(" ");
 
     const registrationId = createRegistrationId();
     const createdAt = new Date().toISOString();
@@ -25,11 +28,11 @@ function doPost(e) {
       data.eventCode || "",
       data.eventName || "",
       data.fullName || "",
+      data.team || "",
+      data.dateOfBirth || "",
       data.email || "",
-      data.phone || "",
+      fullPhone,
       data.category || "",
-      data.bikeSetup || "",
-      data.emergencyContact || "",
       data.notes || "",
       data.feeCzk || "",
       data.currency || "",
@@ -132,11 +135,11 @@ function ensureHeader(sheet) {
     "eventCode",
     "eventName",
     "fullName",
+    "team",
+    "dateOfBirth",
     "email",
     "phone",
     "category",
-    "bikeSetup",
-    "emergencyContact",
     "notes",
     "feeCzk",
     "currency",
