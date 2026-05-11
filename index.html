@@ -3,125 +3,201 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#c44f24" />
+    <meta name="theme-color" content="#101010" />
     <meta
       name="description"
-      content="OneGear Praha - precision cycling service, custom builds, and city-ready performance in Prague."
+      content="One Gear Praha - singlespeed, fixed gear, and street bike races in Prague."
     />
     <meta name="robots" content="index,follow" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="OneGear Praha" />
-    <meta property="og:title" content="OneGear Praha" />
+    <meta property="og:site_name" content="One Gear Praha" />
+    <meta property="og:title" content="One Gear Praha | Prague Fixed Gear Races" />
     <meta
       property="og:description"
-      content="Precision cycling service, custom builds, and city-ready performance in Prague."
+      content="Singlespeed, fixed gear, and street bike races in Prague."
     />
     <meta property="og:url" content="https://onegearpraha.cc/" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="OneGear Praha" />
+    <meta name="twitter:title" content="One Gear Praha" />
     <meta
       name="twitter:description"
-      content="Precision cycling service, custom builds, and city-ready performance in Prague."
+      content="Singlespeed, fixed gear, and street bike races in Prague."
     />
     <link rel="canonical" href="https://onegearpraha.cc/" />
-    <title>OneGear Praha</title>
+    <title>One Gear Praha | Prague Fixed Gear Races</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "name": "OneGear Praha",
+        "@type": "SportsOrganization",
+        "name": "One Gear Praha",
         "url": "https://onegearpraha.cc/",
-        "email": "hello@onegearpraha.cc",
-        "areaServed": "Prague",
-        "description": "Precision cycling service, custom builds, and city-ready performance in Prague."
+        "sameAs": ["https://www.instagram.com/one_gear_praha/", "https://www.facebook.com/onegearpraha"],
+        "description": "Singlespeed, fixed gear, and street bike races in Prague."
       }
     </script>
   </head>
   <body>
-    <div class="background-noise" aria-hidden="true"></div>
-    <div class="glow glow-one" aria-hidden="true"></div>
-    <div class="glow glow-two" aria-hidden="true"></div>
+    <div class="mesh" aria-hidden="true"></div>
 
     <header class="site-header">
-      <a class="brand" href="#top" aria-label="OneGear Praha homepage">
-        <span class="brand-dot"></span>
-        <span class="brand-text">OneGear Praha</span>
+      <a class="brand" href="#top" aria-label="One Gear Praha homepage">
+        <img class="brand-logo" src="onegear-logo.svg" alt="One Gear logo" />
+        <span class="brand-name">ONE GEAR PRAHA</span>
       </a>
       <nav aria-label="Primary">
         <ul class="nav-list">
-          <li><a href="#services">Services</a></li>
-          <li><a href="#builds">Builds</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="#invite">Invite</a></li>
+          <li><a href="#register">Register</a></li>
+          <li><a href="#rules">Rules</a></li>
         </ul>
       </nav>
     </header>
 
-    <main id="top">
-      <section class="hero reveal">
-        <p class="kicker">Based in Prague</p>
-        <h1>Your Bike. Tuned Like An Instrument.</h1>
-        <p class="hero-copy">
-          We specialize in clean city builds, precision drivetrain service, and custom setups for riders who care
-          about feel.
+    <main id="top" class="page">
+      <section id="invite" class="hero reveal">
+        <img class="hero-logo" src="onegear-logo.svg" alt="One Gear Praha logo" />
+        <p class="eyebrow">Prague street racing community</p>
+        <h1>One Gear Praha</h1>
+        <p class="hero-text">
+          Singlespeed, fixed gear, and street bike races in Prague. We organize fast, technical events built around
+          the city riding scene and the community that drives it.
         </p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="#contact">Book A Service</a>
-          <a class="button button-ghost" href="#services">See Services</a>
+        <p class="hero-text hero-subtext">
+          Follow the latest event announcements, archived race formats, and registration links in one place.
+        </p>
+        <div class="hero-cta">
+          <a class="button button-primary" href="#register">Open Registration</a>
+          <a class="button button-ghost" href="https://www.instagram.com/one_gear_praha/" target="_blank" rel="noreferrer"
+            >Instagram</a
+          >
         </div>
       </section>
 
-      <section id="services" class="section reveal">
-        <h2>What We Do</h2>
-        <div class="grid grid-services">
+      <section class="panel reveal" aria-labelledby="featured-event-title">
+        <h2 id="featured-event-title">Featured Event Archive</h2>
+        <p class="panel-intro">
+          A snapshot from a previous BPF Crit edition. We keep archived formats here so riders can check the vibe,
+          timing, and rules before the next invite drops.
+        </p>
+        <div class="grid-two">
           <article class="card">
-            <h3>Performance Tune-Up</h3>
-            <p>Full drivetrain clean, wheel check, precise brake and shifting calibration.</p>
+            <h3>Schedule</h3>
+            <ul class="list-clean">
+              <li>Meet + registration: 15:30-16:00</li>
+              <li>Training + heats: 16:00-17:00</li>
+              <li>Finals: 17:00-17:30</li>
+            </ul>
           </article>
-          <article class="card">
-            <h3>Custom City Builds</h3>
-            <p>Single speed, commuter, and minimalist builds made for Prague streets.</p>
-          </article>
-          <article class="card">
-            <h3>Fit & Position</h3>
-            <p>Comfort-first cockpit adjustments and saddle setup for daily reliability.</p>
-          </article>
-        </div>
-      </section>
-
-      <section id="builds" class="section reveal">
-        <h2>Recent Builds</h2>
-        <div class="grid grid-builds">
-          <article class="build-card">
-            <p class="build-tag">Steel Commuter</p>
-            <p>Shimano CUES setup, dynamo lighting, all-weather braking.</p>
-          </article>
-          <article class="build-card">
-            <p class="build-tag">Track Inspired</p>
-            <p>Single-speed ratio optimization and responsive city geometry.</p>
-          </article>
-          <article class="build-card">
-            <p class="build-tag">All-Road Utility</p>
-            <p>Wide tire clearance, rack integration, and reliable gearing for mixed terrain.</p>
+          <article id="rules" class="card">
+            <h3>Rules Snapshot</h3>
+            <ul class="list-clean">
+              <li>Fixed gear bike</li>
+              <li>Flat or drop bars (bullhorn not allowed)</li>
+              <li>Bar ends covered + helmet required</li>
+              <li>Online fee: 200 CZK, on-spot: 250 CZK</li>
+            </ul>
           </article>
         </div>
       </section>
 
-      <section id="contact" class="section section-contact reveal">
-        <h2>Contact</h2>
-        <p>Ready to ride smoother? Reach out and we will help you choose the right setup.</p>
-        <a class="button button-primary" href="mailto:hello@onegearpraha.cc">hello@onegearpraha.cc</a>
+      <section id="register" class="panel panel-register reveal" aria-labelledby="register-title">
+        <div class="panel-head">
+          <h2 id="register-title">Register for the Next Race</h2>
+          <p>
+            Use this form when a new invite is open. Registration is saved to Google Sheets and then redirected to
+            Revolut payment.
+          </p>
+        </div>
+
+        <div id="payment-message" class="notice" aria-live="polite"></div>
+        <div class="notice notice-warning">
+          Before publishing, set your Google Apps Script URL in the form <code>action</code> attribute.
+        </div>
+
+        <form
+          id="registration-form"
+          method="post"
+          action="https://script.google.com/macros/s/AKfycbzAtmZJHuWmfsh2eduIGEqKdWG7JN_tGuYV68EjNvYl6GAcBVQl9eFq5UtH7726PaNe/exec"
+          novalidate
+        >
+          <input type="hidden" name="eventCode" value="ONEGEAR-GENERAL" />
+          <input type="hidden" name="eventName" value="One Gear Praha Registration" />
+          <input type="hidden" name="feeCzk" value="200" />
+          <input type="hidden" name="currency" value="CZK" />
+
+          <div class="form-grid">
+            <label>
+              Full name
+              <input name="fullName" type="text" autocomplete="name" required />
+            </label>
+            <label>
+              Email
+              <input name="email" type="email" autocomplete="email" required />
+            </label>
+            <label>
+              Phone
+              <input name="phone" type="tel" autocomplete="tel" required />
+            </label>
+            <label>
+              Category
+              <select name="category" required>
+                <option value="" selected disabled>Select category</option>
+                <option value="rider">Rider</option>
+                <option value="spectator">Spectator</option>
+              </select>
+            </label>
+            <label>
+              Bike setup
+              <select name="bikeSetup" required>
+                <option value="" selected disabled>Select setup</option>
+                <option value="fixed">Fixed gear</option>
+                <option value="singlespeed">Singlespeed</option>
+                <option value="other">Other</option>
+              </select>
+            </label>
+            <label>
+              Emergency contact
+              <input name="emergencyContact" type="text" required />
+            </label>
+          </div>
+
+          <label class="label-full">
+            Notes (optional)
+            <textarea name="notes" rows="3" placeholder="Anything organizers should know?"></textarea>
+          </label>
+
+          <label class="checkbox-row">
+            <input name="consent" type="checkbox" required />
+            I confirm my registration details are correct and agree that One Gear Praha stores this registration in
+            organizer records.
+          </label>
+
+          <div class="form-footer">
+            <p class="fee">Online fee: <strong>200 CZK</strong> via Revolut</p>
+            <button id="submit-button" class="button button-primary" type="submit">Register and Continue to Payment</button>
+          </div>
+        </form>
+
+        <p class="status" aria-live="polite">You will be redirected to Revolut after successful registration.</p>
       </section>
     </main>
 
     <footer class="site-footer">
-      <p>© <span id="year"></span> OneGear Praha. Built in Prague.</p>
+      <p>Singlespeed, fixed gear, and street bike races in Prague.</p>
+      <p>
+        Follow:
+        <a href="https://www.instagram.com/one_gear_praha/" target="_blank" rel="noreferrer">Instagram</a>
+        |
+        <a href="https://www.facebook.com/onegearpraha" target="_blank" rel="noreferrer">Facebook</a>
+      </p>
+      <p>© <span id="year"></span> One Gear Praha</p>
     </footer>
 
     <script src="script.js"></script>

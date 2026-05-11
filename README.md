@@ -1,86 +1,72 @@
-# OneGear Praha site
+# One Gear Praha site
 
-Launch checklist for publishing this static site on GitHub Pages with custom domain onegearpraha.cc.
+Static invite + registration site for GitHub Pages.
 
-## Current status
+Registration flow:
 
-- Static site files are ready.
-- CNAME file is present and set to onegearpraha.cc.
-- Git branch is main.
-- Git remote is not configured yet.
+1. User submits form on GitHub Pages.
+2. Form posts to Google Apps Script Web App.
+3. Apps Script saves registration to Google Sheet.
+4. Apps Script redirects user to Revolut payment link.
+5. User returns to the site on `?payment=success` or `?payment=cancel`.
 
-## 1) Create and connect the GitHub repository
+## Files
 
-Create a public repository on GitHub, for example:
+- `index.html`: invite page and registration form
+- `styles.css`: site styles
+- `script.js`: visual enhancements and payment status messaging only
+- `apps-script.gs`: Google Apps Script backend sample
 
-- onegearpraha-site
+## Setup the backend (Google Apps Script)
 
-Then run:
+1. Create a Google Sheet, copy its ID from URL.
+2. Go to script.google.com and create a new Apps Script project.
+3. Paste contents of `apps-script.gs` into project editor.
+4. Fill these constants:
+	- `SHEET_ID`
+	- `SHEET_TAB`
+	- `SITE_RETURN_URL`
+	- `REVOLUT_PAYMENT_LINK`
+5. Deploy as Web App:
+	- Execute as: Me
+	- Who has access: Anyone
+6. Copy Web App URL.
 
-```bash
-cd ~/Sites/onegearpraha-site
-git add .
-git commit -m "Prepare launch"
-git remote add origin https://github.com/<YOUR_GITHUB_USERNAME>/onegearpraha-site.git
-git push -u origin main
+Important:
+
+- `SHEET_ID` must be the spreadsheet ID from the Google Sheet URL.
+- `WEB_APP_URL` should match the deployed Apps Script Web App URL.
+- `REVOLUT_PAYMENT_LINK` should be your actual Revolut payment URL.
+- The Apps Script app saves each registration before it redirects to payment.
+- The script writes a row with `paymentStatus = pending` and then marks it `paid` when Revolut returns to the callback URL.
+- If Revolut does not preserve the `reference` query parameter in the return URL for your account, use a webhook or manual reconciliation instead.
+
+## Wire the form to Apps Script
+
+Edit `index.html` form action:
+
+```html
+action="PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEBAPP_URL_HERE"
 ```
 
-If you already have a remote with a different URL, update it with:
+Replace with your deployed Web App URL.
 
-```bash
-git remote set-url origin https://github.com/<YOUR_GITHUB_USERNAME>/onegearpraha-site.git
-git push -u origin main
-```
+If you change the form action later, the site can still work as long as the URL points to the deployed Apps Script web app.
 
-## 2) Enable GitHub Pages
+## Deploy on GitHub Pages
 
-In the GitHub repository:
-
-1. Open Settings -> Pages.
-2. In Build and deployment:
-3. Source: Deploy from a branch.
-4. Branch: main and /(root).
+1. Push repo to GitHub.
+2. Repository Settings -> Pages.
+3. Source: Deploy from branch.
+4. Branch: `main`, folder: `/root`.
 5. Save.
 
-Because CNAME already exists in this repo, Pages should detect onegearpraha.cc automatically.
+If using custom domain, keep `CNAME` in repo root and configure DNS records.
 
-## 3) Configure DNS for onegearpraha.cc
+## Important notes
 
-At your domain registrar DNS panel, create these records:
-
-- A record: Host @ -> 185.199.108.153
-- A record: Host @ -> 185.199.109.153
-- A record: Host @ -> 185.199.110.153
-- A record: Host @ -> 185.199.111.153
-- CNAME record: Host www -> <YOUR_GITHUB_USERNAME>.github.io
-
-Remove any conflicting existing records for @ or www.
-
-Optional IPv6 support (recommended):
-
-- AAAA: @ -> 2606:50c0:8000::153
-- AAAA: @ -> 2606:50c0:8001::153
-- AAAA: @ -> 2606:50c0:8002::153
-- AAAA: @ -> 2606:50c0:8003::153
-
-## 4) Finish domain setup on GitHub
-
-Back in Settings -> Pages:
-
-1. Ensure Custom domain is onegearpraha.cc.
-2. Wait until DNS check passes (can take minutes to a few hours).
-3. Enable Enforce HTTPS.
-
-## 5) Verify after propagation
-
-Check in browser:
-
-- https://onegearpraha.cc
-- https://www.onegearpraha.cc
-
-Both should resolve to the same site over HTTPS.
-
-## Notes
-
-- If you change DNS and nothing updates yet, wait for propagation and clear DNS cache in your browser/OS.
-- Keep the CNAME file in the repository root.
+- GitHub Pages supports browser JavaScript normally.
+- This setup does not require JS for core registration submit/redirect logic.
+- Do not put API secrets in frontend files.
+- Payment confirmation is handled by the Revolut return callback in this setup; the sheet status changes from `pending` to `paid` when the callback fires.
+- If your Revolut configuration does not return the reference reliably, the next step is a webhook or manual reconciliation column in the sheet.
