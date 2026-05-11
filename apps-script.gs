@@ -5,7 +5,6 @@
 const SHEET_ID = "12wNQ5gwWv6KdwHUB0ZY9i3GjtC7shIxnReC4qeN3wV4";
 const SHEET_TAB = "Registrations";
 const SITE_RETURN_URL = "https://onegearpraha.cc/";
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzAtmZJHuWmfsh2eduIGEqKdWG7JN_tGuYV68EjNvYl6GAcBVQl9eFq5UtH7726PaNe/exec";
 const REVOLUT_PAYMENT_LINK = "https://checkout.revolut.com/pay/a7ac8074-52d7-4912-9b69-f5564df607e4";
 
 function doPost(e) {
@@ -86,10 +85,6 @@ function doGet(e) {
 function validateConfig() {
   if (SHEET_ID === "PASTE_GOOGLE_SHEET_ID" || !SHEET_ID) {
     throw new Error("Missing SHEET_ID configuration.");
-  }
-
-  if (WEB_APP_URL === "PASTE_WEB_APP_URL" || !WEB_APP_URL) {
-    throw new Error("Missing WEB_APP_URL configuration.");
   }
 
   if (REVOLUT_PAYMENT_LINK === "PASTE_REVOLUT_PAYMENT_LINK" || !REVOLUT_PAYMENT_LINK) {
@@ -187,6 +182,12 @@ function buildRevolutUrl(registration) {
   // Return the Revolut checkout link as-is
   // The checkout link already has all payment details configured
   return REVOLUT_PAYMENT_LINK;
+}
+
+function getWebAppUrl() {
+  const currentUrl = ScriptApp.getService().getUrl();
+  if (currentUrl) return currentUrl;
+  throw new Error("Unable to resolve active Web App URL.");
 }
 
 function markPaymentStatus(registrationId, paymentStatus) {
