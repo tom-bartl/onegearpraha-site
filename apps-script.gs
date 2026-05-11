@@ -29,6 +29,7 @@ function doPost(e) {
       data.eventName || "",
       data.fullName || "",
       data.team || "",
+      data.country || "",
       data.dateOfBirth || "",
       data.email || "",
       fullPhone,
@@ -136,6 +137,7 @@ function ensureHeader(sheet) {
     "eventName",
     "fullName",
     "team",
+    "country",
     "dateOfBirth",
     "email",
     "phone",
@@ -199,7 +201,7 @@ function markPaymentStatus(registrationId, paymentStatus) {
 
   for (let rowIndex = 1; rowIndex < values.length; rowIndex += 1) {
     if (String(values[rowIndex][0]) === String(registrationId)) {
-      sheet.getRange(rowIndex + 1, 15).setValue(paymentStatus);
+      sheet.getRange(rowIndex + 1, 16).setValue(paymentStatus);
       return true;
     }
   }
