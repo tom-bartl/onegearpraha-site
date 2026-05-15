@@ -1,3 +1,5 @@
+// ===== Wait for DOM to be Ready =====
+function initializeApp() {
 // ===== Year Population =====
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = String(new Date().getFullYear());
@@ -181,3 +183,11 @@ document.querySelectorAll("input, select, textarea").forEach((field) => {
     }
   });
 });
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeApp);
+} else {
+  initializeApp();
+}
