@@ -23,6 +23,10 @@ body {
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   min-height: 100vh;
   font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
@@ -111,6 +115,14 @@ body {
   color: var(--ink);
   text-decoration: none;
   font-weight: 500;
+  transition: color 200ms ease, text-shadow 200ms ease;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid transparent;
+}
+
+.nav-list a:hover {
+  color: var(--hot);
+  text-shadow: 0 0 8px rgba(255, 79, 0, 0.25);
 }
 
 .page {
@@ -206,6 +218,57 @@ h3 {
   background: linear-gradient(135deg, var(--hot-strong), #dd9600);
 }
 
+.button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.button.is-loading {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.spinner {
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 2px solid rgba(16, 13, 11, 0.3);
+  border-top-color: #100d0b;
+  border-radius: 50%;
+  animation: spin 600ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes labelPulse {
+  0% {
+    text-shadow: 0 0 0 rgba(255, 79, 0, 0);
+  }
+  50% {
+    text-shadow: 0 0 8px rgba(255, 79, 0, 0.3);
+  }
+  100% {
+    text-shadow: 0 0 0 rgba(255, 79, 0, 0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .button-ghost {
   border-color: #555;
 }
@@ -282,12 +345,18 @@ label {
   display: grid;
   gap: 0.3rem;
   font-size: 0.95rem;
+  transition: transform 200ms ease;
 }
 
 .phone-fields {
   display: grid;
-  grid-template-columns: 7.5rem 1fr;
+  grid-template-columns: 5.3rem 1fr;
   gap: 0.5rem;
+}
+
+.phone-fields select[name="countryCode"] {
+  text-align: center;
+  padding-inline: 0.3rem;
 }
 
 input,
@@ -300,13 +369,53 @@ textarea {
   border-radius: 0.55rem;
   padding: 0.62rem 0.65rem;
   font: inherit;
+  transition: border-color 220ms ease, box-shadow 220ms ease, background-color 220ms ease;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
-  outline: 2px solid #ff9755;
-  outline-offset: 1px;
+  outline: none;
+  border-color: #ff9755;
+  box-shadow: 0 0 0 3px rgba(255, 151, 85, 0.15);
+}
+
+input.is-invalid,
+select.is-invalid,
+textarea.is-invalid {
+  border-color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.08);
+}
+
+input.is-invalid:focus,
+select.is-invalid:focus,
+textarea.is-invalid:focus {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.12);
+}
+
+.error-message {
+  color: #ff8b7b;
+  font-size: 0.82rem;
+  margin-top: 0.25rem;
+  display: block;
+  min-height: 1.1rem;
+  animation: slideDown 200ms ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+label.is-focused {
+  animation: labelPulse 300ms ease;
 }
 
 .label-full {
@@ -317,11 +426,18 @@ textarea:focus {
   grid-template-columns: auto 1fr;
   align-items: start;
   gap: 0.5rem;
+  transition: opacity 200ms ease;
 }
 
 .checkbox-row input {
   width: 1rem;
   margin-top: 0.1rem;
+  accent-color: var(--hot);
+  cursor: pointer;
+}
+
+.checkbox-row.is-checked {
+  opacity: 0.95;
 }
 
 .form-footer {
@@ -396,9 +512,5 @@ textarea:focus {
     gap: 0.7rem;
     font-size: 0.94rem;
     flex-wrap: wrap;
-  }
-
-  .phone-fields {
-    grid-template-columns: 1fr;
   }
 }
