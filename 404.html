@@ -4,24 +4,104 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex,follow" />
-    <title>Page not found | OneGear Praha</title>
+    <meta name="theme-color" content="#101010" />
+    <title>404 | One Gear Praha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
+    <style>
+      .error-container {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 2rem;
+      }
+
+      .error-content {
+        text-align: center;
+        max-width: 640px;
+      }
+
+      .error-chain {
+        font-size: 5rem;
+        margin-bottom: 1.5rem;
+        display: inline-block;
+        animation: chainDrop 0.8s ease-out;
+      }
+
+      @keyframes chainDrop {
+        0% {
+          opacity: 0;
+          transform: translateY(-2rem) rotate(-15deg);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) rotate(0);
+        }
+      }
+
+      .error-code {
+        font-family: "Bebas Neue", Impact, sans-serif;
+        font-size: clamp(3rem, 12vw, 7rem);
+        letter-spacing: 0.05em;
+        margin: 0.5rem 0;
+        background: linear-gradient(135deg, var(--hot), #ffab00);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .error-message {
+        font-size: 1.4rem;
+        color: var(--muted);
+        margin: 1rem 0 0.5rem;
+        line-height: 1.4;
+      }
+
+      .error-subtext {
+        color: #999;
+        font-size: 1.05rem;
+        margin-bottom: 2rem;
+      }
+
+      .error-cta {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    </style>
   </head>
   <body>
-    <div class="background-noise" aria-hidden="true"></div>
-    <div class="glow glow-one" aria-hidden="true"></div>
-    <div class="glow glow-two" aria-hidden="true"></div>
+    <div class="mesh" aria-hidden="true"></div>
 
-    <main class="section" style="min-height: 80vh; display: grid; place-items: center;">
-      <section class="section-contact" style="max-width: 540px; text-align: center;">
-        <h1>404</h1>
-        <p>The page you are looking for is not here.</p>
-        <a class="button button-primary" href="/">Return home</a>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="One Gear Praha homepage">
+        <img class="brand-logo" src="onegear-logo.svg" alt="One Gear logo" />
+        <span class="brand-name">ONE GEAR PRAHA</span>
+      </a>
+    </header>
+
+    <main class="error-container">
+      <section class="error-content">
+        <div class="error-chain">⛓️</div>
+        <h1 class="error-code">404</h1>
+        <p class="error-message">This isn't the way.</p>
+        <p class="error-message">Your chain dropped.</p>
+        <p class="error-subtext">The page you're looking for is off the track.</p>
+        <div class="error-cta">
+          <a class="button button-primary" href="/">Pick it up &amp; go home</a>
+          <a class="button button-ghost" href="/#register">Get back to racing</a>
+        </div>
       </section>
     </main>
 
-    <footer class="site-footer">
-      <p>OneGear Praha</p>
+    <footer class="site-footer" style="position: absolute; bottom: 0; width: 100%; border-top: none;">
+      <p style="margin: 0; font-size: 0.9rem;">One Gear Praha | Page dropped in 404 space</p>
     </footer>
   </body>
 </html>
